@@ -244,11 +244,11 @@ mcmc_trace(fit_twopl_irt_posterior_1)
 mcmc_trace(fit_twopl_irt_posterior_2)
 
 # divergent transitions -----------------------------------------------------------------
-mcmc_nuts_divergence(fit_twopl_irt_nuts, fit_twopl_irt_lg)
+mcmc_nuts_divergence(nuts_params(fit_twopl_irt), log_posterior(fit_twopl_irt))
 check_divergences(fit_twopl_irt)
 
 # energy plots --------------------------------------------------------------------------
-mcmc_nuts_energy(fit_twopl_irt_nuts)
+mcmc_nuts_energy(nuts_params(fit_twopl_irt))
 
 
 ##### JOIN ESTIMATES WITH SAMPLE ========================================================

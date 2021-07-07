@@ -41,7 +41,7 @@ Line 654 - COMPUTE SAMPLE POPULATION (SP) CHARACTERISTICS
 rm(list=ls(all=TRUE))
 
 # set working directory -----------------------------------------------------------------
-setwd("D:/Sascha/projects/online-participation")
+setwd("")
 
 # install and load packages -------------------------------------------------------------
 source("./code/packages.R")
