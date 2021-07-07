@@ -7,7 +7,7 @@ Does online political involvement reinforce or compensate participatory deficien
 ## Description of folders and files
 * [Code](https://github.com/saschagobel/jqd-voting-and-sm-pol-participation/tree/master/code): contains R code for data collection and processing, analyses, and figures.
 * [Data](https://github.com/saschagobel/jqd-voting-and-sm-pol-participation/tree/master/data): contains anonymized replication data for main analyses.
-* [Figures](https://github.com/saschagobel/comparative-legislators-database/tree/master/figures): contains all figures presented in the paper and appendix.
+* [Figures](https://github.com/saschagobel/jqd-voting-and-sm-pol-participation/tree/master/figures): contains all figures presented in the paper and appendix.
 
 ## Acquiring detailed data for replication or collaboration purposes
 Voter record and Twitter Text data used in this paper are too large to be stored here. In addition, there exist both ethical and legal restrictions that prohibit directly sending to or publicly sharing these data with third parties. Offering anonymized replication data decoupled from information that would allow future re-identification of individuals while retaining full individual text messages is not possible. For researchers wishing to replicate the analyses in the paper (beyond what's possible with the [basic replication file]()) or to collaborate based on these data in a strictly non-commercial setting, data access is only possible via a non-disclosure agreement with the author and in accordance with Twitter regulations.
