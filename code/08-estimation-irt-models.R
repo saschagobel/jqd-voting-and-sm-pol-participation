@@ -1,7 +1,7 @@
 # ---------------------------------------------------------------------------------------
 # VOTING AND SOCIAL-MEDIA BASED POLITICAL PARTICIPATION
-# Sascha Göbel
-# Item Response Theory models estimation script
+# Sascha Goebel
+# Item response theory model script
 # April 2019
 # ---------------------------------------------------------------------------------------
 
@@ -28,7 +28,7 @@ Line 35 - PREPARATIONS
 Line 52 - PREPARE DATA FOR ESTIMATION OF ITEM RESPONSE THEORY MODEL
 Line 84 - ESTIMATION OF ITEM RESPONSE THEORY MODEL
 Line 211 - MODEL DIAGNOSTICS
-Line 267 - JOIN ESTIMATES WITH SAMPLE
+Line 254 - JOIN ESTIMATES WITH SAMPLE
 ")
 
 
@@ -38,7 +38,7 @@ Line 267 - JOIN ESTIMATES WITH SAMPLE
 rm(list=ls(all=TRUE))
 
 # set working directory -----------------------------------------------------------------
-setwd("D:/Sascha/projects/online-participation")
+setwd("")
 
 # install and load packages -------------------------------------------------------------
 source("./code/packages.R")
@@ -83,7 +83,7 @@ saveRDS(sample_irt, "./data/models/sample_irt")
 
 #### ESTIMATION OF ITEM RESPONSE THEORY MODEL ===========================================
 
-# specify parallel estimation by distributing chains over 4 processor cores -------------
+# specify parallel estimation by distributing chains over processor cores ---------------
 options(mc.cores = parallel::detectCores())
 
 # specficy Stan program -----------------------------------------------------------------
@@ -211,21 +211,13 @@ saveRDS(fit_twopl_irt_summary, "./data/models/fit_twopl_irt_summary")
 #### MODEL DIAGNOSTICS ==================================================================
 
 # split Rhat: potential scale reduction statistic ---------------------------------------
-# measures the ratio of the average variance of draws within each randomly initalized 
-# chain to the variance of the pooled draws across chains. If all chains are at 
-# equilibrium, these will be the same and Rhat will be 1
 fit_twopl_irt_rhats <- rhat(fit_twopl_irt)
 mcmc_rhat_hist(fit_twopl_irt_rhats, binwidth = 0.00001)
-# Rhat is 1 or very close to one for all parameters
 
 # effective sample size -----------------------------------------------------------------
-# number of independent draws from the posterior distribution. The larger the ratio of 
-# neff to N the better
 fit_twopl_irt_neffs <- neff_ratio(fit_twopl_irt)
 mcmc_neff_hist(fit_twopl_irt_neffs, binwidth = 0.01)
 which(fit_twopl_irt_neffs < 0.1)
-# almost all parameters have an neff to N ratio larger than 1, none have a ratio smaller
-# than 0.1
 
 # autocorrelation -----------------------------------------------------------------------
 # examine autocorrelation for all parameters and a random sample of theta parameters
@@ -242,8 +234,6 @@ mcmc_acf(fit_twopl_irt_posterior_1_5, lags = 10)
 fit_twopl_irt_posterior_2 <- as.array(fit_twopl_irt, 
                                 pars = sample(names(fit_twopl_irt@sim$samples[[1]]), 15))
 mcmc_acf(fit_twopl_irt_posterior_2, lags = 15)
-# autocorrelation drops to zero quickly and is in part even negative indicating fast 
-# convergence of sample mean towards true mean
 
 # traceplots ----------------------------------------------------------------------------
 # examine traceplots for all parameters and a random sample of theta parameters
@@ -252,16 +242,13 @@ fit_twopl_irt_posterior_1 <- as.array(fit_twopl_irt,
                                                "sigma_alpha", "sigma_beta"))
 mcmc_trace(fit_twopl_irt_posterior_1)
 mcmc_trace(fit_twopl_irt_posterior_2)
-# chains mix well and all chains explore same region of parameter values
 
 # divergent transitions -----------------------------------------------------------------
 mcmc_nuts_divergence(fit_twopl_irt_nuts, fit_twopl_irt_lg)
 check_divergences(fit_twopl_irt)
-# no divergences
 
 # energy plots --------------------------------------------------------------------------
 mcmc_nuts_energy(fit_twopl_irt_nuts)
-# no noticeable problems, histograms look similar
 
 
 ##### JOIN ESTIMATES WITH SAMPLE ========================================================
@@ -282,96 +269,6 @@ sample_processed <- left_join(x = sample_processed, y = sample_irt, by = "voter_
 
 # statistics ----------------------------------------------------------------------------
 cor(x= sample_processed$turnout_rate, y = sample_processed$theta_median, use = "complete.obs")
-# turnout rate and theta (median) correlation = 0.96
-# turnout rate however does not account for the overall number of elections a voter
-# was eligible to participate in nor does it account for the type of election
-# The former makes the theta values more sensible where very few elections where 
-# observed and the turnout rate would be 1, theta here also takes the type of election
-# into account. The type of election also makes theta discriminate more between voter
-# types than the turnout rate allows
 
 # save updated sample -------------------------------------------------------------------
 saveRDS(sample_processed, "./data/analysis/sample_processed")
-
-
-# the response function will make a steeper, sharper curve if the discrimination is high. If the 
-# discrimination is low, then the item curve looks more "plain", spreading through the scale, 
-# indicating that it is an item that can be responded or endorsed for more people along the 
-#scale continuous.
-
-# see stan user guide (sear for irt)
-# If alpha[k] is greater than 1, responses are more attenuated with less chance of getting a question 
-# right at random
-# parameter alpha[k] is constrained to be positive, which prohibits there being questions that are easier 
-# for students of lesser ability; such questions are not unheard of, but they tend to be eliminated from 
-# most testing situations where an IRT model would be applied
-
-# the model is parameterized here with student abilities alpha being given a standard normal prior. This is
-# to identify both the scale and the location of the parameters, both of which would be unidentified otherwise;
-
-# intercept term mu_beta can’t itself be modeled hierarchically, so it is given a weakly informative 
-# Cauchy(0, 5) prior. Similarly, the scale terms, sigma_beta, and sigma_gamma, are given half-Cauchy priors. 
-# As mentioned earlier, the scale and location for alpha are fixed to ensure identifiability. The truncation 
-# in the half-Cauchy prior is implicit; explicit truncation is not necessary because the log probability need 
-# only be calculated up to a proportion and the scale variables are constrained to (0, ∞) by their declarations.
-
-# One application of (hierarchical) priors is to identify the scale and/or location of a group of parameters. 
-# For example, in the IRT models discussed in the previous section, there is both a location and scale 
-# non-identifiability. With uniform priors, the posteriors will float in terms of both scale and location. 
-# See Section 19.1 for a simple example of the problems this poses for estimation. The non-identifiability 
-#is resolved by providing a standard normal (i.e., Normal(0, 1)) prior on one group of coefficients, such as 
-#the student abilities. With a standard normal prior on the student abilities, the IRT model is identified in 
-#that the posterior will produce a group of estimates for student ability parameters that have a sample mean of 
-#close to zero and a sample variance of close to one. The difficulty and discrimination parameters for the 
-#questions should then be given a diffuse, or ideally a hierarchical prior, which will identify these parameters 
-#by scaling and locating relative to the student ability parameters.
-
-# see levy, mislevy 2016 253-291
-# see (Gelman and Hill, 2007, pps. 314–320)
-# see https://www.cambridge.org/core/services/aop-cambridge-core/content/view/F8488E7C93866843A2D23520572C665A/S0007123416000144a.pdf/deliberative_abilities_and_influence_in_a_transnational_deliberative_poll_europolis.pdf
-# we use Bayesian item responsetheoretic model (IRT)
-# originally developed in psychology and educational science tomeasure latent psychological constructs
-# 2-parameter IRT model, which is less restrictive thanRasch’s model
-# equation assumes that the probability of turnout at a specific election is given by the extent to 
-# which the degree of turnout propensity exceeds the difficulty of the election
-# the larger the difference between the degree of turnout propensity and the difficulty of the 
-# election, the higher the probability that a correct answer (turnout) is given by respondents.
-# discrimination parameter represents the impact of the latent dimension on the response, thus it 
-# is called the discrimination parameter. If discrimination parameter = 0, there is no relationship 
-# between the identified latent dimension and the response category. In other words, the higher the 
-# discrimination parameter, the more the item differentiates between subjects.
-# This logic can be translated to our research purpose in a straightforward way. We can interpret 
-# deliberative ability similar to intelligence in educational science, namely how well citizens are 
-# able to achieve the various standards of deliberative quality (justification rationality,respect, etc.)
-# an improvement of one’s ability level increasesthe probabilities of reaching a certain standard 
-# in a similar way (similar slopes)
-
-# IRT has some advantages:first, while conventional factor analysis only models thecovariance of the item 
-# responses as product of the latent characters of items and individuals,IRT models the response as a function 
-# of the difference of the latent characters (difficulty andability), whichfits better intuitively.74Secondly 
-#and related to thefirst point, IRT also makesthe realistic assumption that some components of deliberative 
-# ability may be more difficult toachieve than others, which can be modelled with the difficulty parameter. 
-# Thirdly, factoranalytic methods are not appropriate for our dummy coded data since normally distributed 
-#errorterms are assumed
-
-# we check whether the differentcomponents  of  deliberative  quality–justification  rationality,  respect,  
-#empathy,  andinquisitiveness–form a compound and uni-dimensional phenomenon at the level ofdeliberating 
-#citizens. This is done on the basis of the IRT analysis. 
-
-# It is well known that IRT suffers from an identificationproblem.79To identify the model, we apply a 
-#Bayesian approach with prior information
-
-
-
-# benchmark
-# vectorized and non-centered
-#  639.308 seconds (Total)
-
-# vectorized and centered
-#  98.4 seconds (Total)
-
-# non-vectorized and non-centered
-# 729.732 seconds (Total)
-
-# non-vectorized and centered
-# 848.895 seconds (Total) with error messages
