@@ -18,7 +18,7 @@ pacman::p_load(RSelenium, stringr, data.table, dplyr, XML, R.utils, lubridate, g
                tidyr, cld2, remoji, rvest, tm, stopwords, quanteda, eeptools, censusr,
                censusapi,rstan,bayesplot,abind,PUMSutils,tidycensus,reticulate,psych,
                preText,keras,foreach,doParallel,purrr,arm, grid, gridExtra, eulerr,
-               ggpubr,streamR,rtweet,
+               ggpubr,streamR,rtweet,cowplot,
                install = TRUE, 
                update = FALSE)
 
