@@ -1,7 +1,7 @@
 # ---------------------------------------------------------------------------------------
 # VOTING AND SOCIAL-MEDIA BASED POLITICAL PARTICIPATION
 # Sascha Goebel
-# Data collection script
+# Twitter data collection script
 # July 2018
 # ---------------------------------------------------------------------------------------
 
@@ -35,7 +35,7 @@ Line 96 - DATA COLLECTION FOR SEARCH SET
 rm(list=ls(all=TRUE))
 
 # set working directory -----------------------------------------------------------------
-setwd("")
+setwd("jqd-voting-and-sm-pol-participation")
 
 # install and load packages -------------------------------------------------------------
 source("./code/packages2.R")

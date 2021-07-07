@@ -1,7 +1,7 @@
 # ---------------------------------------------------------------------------------------
 # VOTING AND SOCIAL-MEDIA BASED POLITICAL PARTICIPATION
-# Sascha Göbel
-# Sampling script
+# Sascha Goebel
+# Sample processing script
 # April 2019
 # ---------------------------------------------------------------------------------------
 
@@ -41,7 +41,7 @@ Line 654 - COMPUTE SAMPLE POPULATION (SP) CHARACTERISTICS
 rm(list=ls(all=TRUE))
 
 # set working directory -----------------------------------------------------------------
-setwd("")
+setwd("jqd-voting-and-sm-pol-participation")
 
 # install and load packages -------------------------------------------------------------
 source("./code/packages.R")

@@ -49,7 +49,7 @@ Line 706 - ESTIMATE PER CAPITA INCOME DISTRIBUTION OF CITIZEN-VOTING AGE POPULAT
 rm(list=ls(all=TRUE))
 
 # set working directory -----------------------------------------------------------------
-setwd("")
+setwd("jqd-voting-and-sm-pol-participation")
 
 # install and load packages -------------------------------------------------------------
 source("./code/packages.R")

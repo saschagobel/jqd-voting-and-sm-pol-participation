@@ -49,7 +49,7 @@ Line 2305 - ASSESS SENSITIVITY OF PREPROCESSING STEPS
 rm(list=ls(all=TRUE))
 
 # set working directory -----------------------------------------------------------------
-setwd("")
+setwd("jqd-voting-and-sm-pol-participation")
 
 # install and load packages and import functions ----------------------------------------
 source("./code/packages.R")

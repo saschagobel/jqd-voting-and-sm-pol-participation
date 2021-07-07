@@ -1,6 +1,6 @@
 # ---------------------------------------------------------------------------------------
 # VOTING AND SOCIAL-MEDIA BASED POLITICAL PARTICIPATION
-# Sascha Göbel
+# Sascha Goebel
 # Additional analyses script
 # July 2021
 # ---------------------------------------------------------------------------------------
@@ -45,7 +45,7 @@ Line 791 - 2018 TURNOUT AMONG SUBGROUPS OF THE REGISTERED VOTER POPULATION
 rm(list=ls(all=TRUE))
 
 # set working directory -----------------------------------------------------------------
-setwd("")
+setwd("jqd-voting-and-sm-pol-participation")
 
 # install and load packages -------------------------------------------------------------
 source("./code/packages.R")

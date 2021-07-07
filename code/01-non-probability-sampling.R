@@ -1,7 +1,7 @@
 # ---------------------------------------------------------------------------------------
 # VOTING AND SOCIAL-MEDIA BASED POLITICAL PARTICIPATION
 # Sascha Goebel
-# Sampling script
+# Non-probability-sampling script
 # April 2019
 # ---------------------------------------------------------------------------------------
 
@@ -32,7 +32,7 @@ Line 334 - SAMPLE BY IDENTIFYING TWITTER HANDLES FOR VOTER FILE ENTRIES
 rm(list=ls(all=TRUE))
 
 # set working directory -----------------------------------------------------------------
-setwd("")
+setwd("jqd-voting-and-sm-pol-participation")
 
 # install and load packages -------------------------------------------------------------
 source("./code/packages.R")

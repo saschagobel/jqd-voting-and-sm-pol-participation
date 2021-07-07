@@ -47,7 +47,7 @@ Line 581 - CLASSIFY DATA FOR ANALYSIS BASED ON SELECTED CLASSIFIER
 rm(list=ls(all=TRUE))
 
 # set working directory -----------------------------------------------------------------
-setwd("")
+setwd("jqd-voting-and-sm-pol-participation")
 
 # install and load packages -------------------------------------------------------------
 source("./code/packages.R")

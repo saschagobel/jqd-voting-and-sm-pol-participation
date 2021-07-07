@@ -69,7 +69,7 @@ Line 4269 - SUBGROUP INTERACTION PLOTS FOR VOTER TYPES (APPENDIX FIGURES G16-31)
 rm(list=ls(all=TRUE))
 
 # set working directory -----------------------------------------------------------------
-setwd("")
+setwd("jqd-voting-and-sm-pol-participation")
 
 # install and load packages -------------------------------------------------------------
 source("./code/packages.R")
