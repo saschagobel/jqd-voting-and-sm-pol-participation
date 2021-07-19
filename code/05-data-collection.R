@@ -38,7 +38,7 @@ rm(list=ls(all=TRUE))
 setwd("jqd-voting-and-sm-pol-participation")
 
 # install and load packages -------------------------------------------------------------
-source("./code/packages2.R")
+source("./code/packages.R")
 source("./code/functions.R")
 
 # read data from disk -------------------------------------------------------------------
