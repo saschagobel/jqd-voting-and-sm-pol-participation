@@ -6,7 +6,7 @@ Does online political involvement reinforce or compensate participatory deficien
 
 ## Description of folders and files
 * [Code](https://github.com/saschagobel/jqd-voting-and-sm-pol-participation/tree/master/code): contains R code for data collection and processing, analyses, and figures.
-* [Data](https://github.com/saschagobel/jqd-voting-and-sm-pol-participation/tree/master/data): contains anonymized replication data for main analyses.
+* [Data](https://github.com/saschagobel/jqd-voting-and-sm-pol-participation/tree/master/data): contains anonymized replication data for main analyses (serialized).
 * [Figures](https://github.com/saschagobel/jqd-voting-and-sm-pol-participation/tree/master/figures): contains all figures presented in the paper and appendix.
 
 ## Acquiring detailed data for replication or collaboration purposes
